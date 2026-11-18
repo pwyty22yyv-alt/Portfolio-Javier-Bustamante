@@ -2702,3 +2702,89 @@ img {
     .project-clip { flex-basis: 82%; width: 82%; }
     .photo-grid { grid-template-rows: 225px 165px 185px; }
 }
+
+
+/* =========================================================
+   AJUSTES DE CONTACTO Y EXPERIENCIA MOBILE — NOV 2026
+   Sin JavaScript. Animaciones respetuosas y accesibles.
+   ========================================================= */
+.whatsapp-float {
+    position: fixed;
+    z-index: 999;
+    right: clamp(18px, 3vw, 34px);
+    bottom: clamp(20px, 4vh, 34px);
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.26);
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(145deg, #24c96b, #0d9f50);
+    box-shadow: 0 8px 28px rgba(0,0,0,.38), 0 0 0 0 rgba(37,211,102,.30);
+    text-decoration: none;
+    transition: transform .28s ease, box-shadow .28s ease, filter .28s ease;
+    animation: whatsapp-attention 5.8s ease-in-out infinite;
+}
+.whatsapp-float__icon { display:grid; width:29px; height:29px; place-items:center; }
+.whatsapp-float__icon svg { display:block; width:100%; height:100%; fill:currentColor; }
+.whatsapp-float__tooltip {
+    position:absolute; right:calc(100% + 13px); top:50%;
+    transform:translate(8px,-50%); padding:10px 13px;
+    border:1px solid rgba(255,255,255,.12); background:rgba(17,17,17,.94);
+    color:#f3f0e9; font-size:10px; letter-spacing:.45px; white-space:nowrap;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease, transform .25s ease, visibility .25s ease;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.whatsapp-float:hover, .whatsapp-float:focus-visible {
+    transform:translateY(-4px) scale(1.06); filter:brightness(1.12);
+    box-shadow:0 12px 34px rgba(0,0,0,.4), 0 0 0 7px rgba(37,211,102,.13);
+    animation-play-state:paused;
+}
+.whatsapp-float:hover .whatsapp-float__tooltip,
+.whatsapp-float:focus-visible .whatsapp-float__tooltip {
+    opacity:1; visibility:visible; transform:translate(0,-50%);
+}
+@keyframes whatsapp-attention {
+    0%,82%,100% { box-shadow:0 8px 28px rgba(0,0,0,.38),0 0 0 0 rgba(37,211,102,0); }
+    86% { box-shadow:0 8px 28px rgba(0,0,0,.38),0 0 0 8px rgba(37,211,102,.16); }
+    90% { box-shadow:0 8px 28px rgba(0,0,0,.38),0 0 0 14px rgba(37,211,102,0); }
+}
+
+/* Evita el quinto logo centrado y sobredimensionado en móvil. */
+@media (max-width:700px) {
+    .brands-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; }
+    .brand-item, .brand-item:last-child {
+        grid-column:auto; justify-self:stretch; width:100%; min-width:0;
+        aspect-ratio:1/1; padding:clamp(15px,5vw,24px);
+    }
+    .brand-item img { max-width:100%; max-height:100%; object-fit:contain; }
+}
+
+/* En móviles, los logos recuperan color de forma secuencial y sutil. */
+@media (hover:none) and (pointer:coarse) {
+    .brand-item img { animation:brand-color-reveal 8s ease-in-out infinite; }
+    .brand-item:nth-child(1) img { animation-delay:0s; }
+    .brand-item:nth-child(2) img { animation-delay:1.1s; }
+    .brand-item:nth-child(3) img { animation-delay:2.2s; }
+    .brand-item:nth-child(4) img { animation-delay:3.3s; }
+    .brand-item:nth-child(5) img { animation-delay:4.4s; }
+    @keyframes brand-color-reveal {
+        0%,12%,100% { filter:grayscale(100%); opacity:.65; transform:scale(1); }
+        20%,42% { filter:grayscale(0%); opacity:1; transform:scale(1.035); }
+        50% { filter:grayscale(35%); opacity:.86; transform:scale(1); }
+    }
+}
+@media (max-width:700px) {
+    .whatsapp-float {
+        right:17px; bottom:calc(88px + env(safe-area-inset-bottom));
+        width:54px; height:54px;
+    }
+    .whatsapp-float__icon { width:27px; height:27px; }
+    .whatsapp-float__tooltip { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+    .whatsapp-float, .brand-item img { animation:none !important; }
+    .whatsapp-float, .whatsapp-float__tooltip, .brand-item img { transition:none !important; }
+}
