@@ -2425,3 +2425,280 @@ img {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+
+/* =========================================================
+   REFINAMIENTO FINAL — PORTFOLIO
+   Mobile projects: tres carruseles independientes, uno por marca.
+   Fotografía: composición editorial con capas y microinteracciones.
+   ========================================================= */
+
+/* Fotografía: mosaico editorial y tratamiento visual */
+.photography {
+    position: relative;
+    overflow: hidden;
+}
+
+.photography::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: 12%;
+    right: -230px;
+    border: 1px solid rgba(197, 164, 104, .10);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.photo-grid {
+    grid-template-columns: 1.12fr .88fr 1fr;
+    grid-template-rows: 280px 230px;
+    gap: 13px;
+    position: relative;
+}
+
+.photo-item {
+    position: relative;
+    display: block;
+    min-width: 0;
+    margin: 0;
+    isolation: isolate;
+    background: #151515;
+    border: 1px solid rgba(255,255,255,.09);
+}
+
+.photo-item::after {
+    content: "";
+    position: absolute;
+    inset: 28% 0 0;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 10%, rgba(0,0,0,.66) 100%);
+    pointer-events: none;
+    opacity: .8;
+    transition: opacity .35s ease;
+}
+
+.photo-item img {
+    display: block;
+    object-fit: cover;
+    filter: saturate(.82) brightness(.82);
+    transition: transform .8s cubic-bezier(.2,.65,.25,1), filter .6s ease;
+}
+
+.photo-item:hover img {
+    transform: scale(1.045);
+    filter: saturate(1) brightness(.98);
+}
+
+.photo-item:hover::after { opacity: 1; }
+
+.photo-item figcaption {
+    position: absolute;
+    z-index: 2;
+    left: 17px;
+    right: 17px;
+    bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: rgba(255,255,255,.88);
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    opacity: .92;
+}
+
+.photo-item figcaption span:first-child {
+    color: var(--gold);
+    font-size: 10px;
+}
+
+.photo-item figcaption span:last-child {
+    text-align: right;
+}
+
+/* Ritmo visual y jerarquía de los proyectos */
+.project-card {
+    position: relative;
+}
+
+.project-media {
+    border: 1px solid rgba(255,255,255,.09);
+    box-shadow: 0 18px 48px rgba(0,0,0,.2);
+}
+
+.project-caption {
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.project-card:hover .project-caption {
+    transform: translateY(-3px);
+}
+
+@media (max-width: 700px) {
+    /* Un bloque independiente por empresa; nunca una sola pista horizontal. */
+    .project-grid.project-showcase {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 34px;
+        overflow: visible;
+    }
+
+    .project-grid.project-showcase .project-card,
+    .project-grid.project-showcase .project-large,
+    .project-grid.project-showcase .project-secondary,
+    .project-grid.project-showcase .project-featured {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .project-grid.project-showcase .project-card {
+        padding: 0 0 21px;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .project-grid.project-showcase .project-card:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .project-media {
+        display: flex;
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 11px;
+        padding: 12px 12px 17px;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(190,157,101,.65) rgba(255,255,255,.07);
+        overscroll-behavior-x: contain;
+    }
+
+    .project-clip {
+        flex: 0 0 76%;
+        width: 76%;
+        height: auto;
+        aspect-ratio: 9 / 16;
+        padding: 5px;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        border: 1px solid rgba(255,255,255,.12);
+        background: #171717;
+        box-shadow: 0 10px 26px rgba(0,0,0,.28);
+    }
+
+    .project-clip video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #050505;
+    }
+
+    .project-category {
+        position: sticky;
+        flex: 0 0 auto;
+        align-self: flex-start;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        order: -1;
+        margin: 0 0 0 -1px;
+        white-space: nowrap;
+    }
+
+    .project-caption {
+        padding: 17px 2px 0;
+        align-items: flex-start;
+    }
+
+    .project-caption h3 {
+        font-size: 21px;
+        letter-spacing: .8px;
+    }
+
+    .project-caption p {
+        max-width: 270px;
+        line-height: 1.7;
+        font-size: 10px;
+    }
+
+    .project-caption > span {
+        padding-top: 3px;
+        font-size: 17px;
+    }
+
+    .projects-note {
+        margin-top: 48px;
+        font-size: 9px;
+        line-height: 1.8;
+    }
+
+    .photography-intro {
+        gap: 22px;
+        margin-bottom: 34px;
+    }
+
+    .photography-intro h2 {
+        font-size: clamp(42px, 11vw, 54px);
+        line-height: 1.05;
+        letter-spacing: -2.5px;
+    }
+
+    .photography-intro > p {
+        max-width: 34ch;
+        padding: 15px 0 0 15px;
+        border-left: 1px solid var(--gold);
+        font-size: 11px;
+        line-height: 1.9;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1.05fr .95fr;
+        grid-template-rows: 260px 180px 205px;
+        gap: 9px;
+    }
+
+    .photo-tall {
+        grid-column: 1;
+        grid-row: span 2;
+    }
+
+    .photo-item:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .photo-item:nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .photo-item:nth-child(4) {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    .photo-item figcaption {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+
+    .photo-item figcaption span:first-child { font-size: 9px; }
+}
+
+@media (max-width: 380px) {
+    .project-clip { flex-basis: 82%; width: 82%; }
+    .photo-grid { grid-template-rows: 225px 165px 185px; }
+}
